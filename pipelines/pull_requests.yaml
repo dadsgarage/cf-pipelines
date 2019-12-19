@@ -21,10 +21,9 @@ steps:
         image_name: "${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}"
         tag: "${{CF_REVISION}}"
         working_directory: "${{main_clone}}/src/docker"
-      validate_pre_commit:
-        title: Running pre-commit validations
-        type: freestyle
-        image: "dadsgarage/dadsgarage:0.2.2"
-        commands:
-          - pre-commit install
-          - pre-commit run -a
+      pre_commit:
+        type: rothandrew/pre-commit
+        title: Validating pre-commit hooks
+        stage: Validate
+        arguments:
+          working_directory: "/codefresh/volume/${{CF_REPO_NAME}}"
